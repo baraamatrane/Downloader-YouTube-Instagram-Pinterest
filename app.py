@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import atexit
+import os
 import re
 import shutil
 import sys
@@ -280,4 +281,4 @@ def clean_temp_files() -> None:
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=False, threaded=True)
+    app.run(host="127.0.0.1", port=int(os.environ.get("DROPLY_PORT", "5000")), debug=False, threaded=True)

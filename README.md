@@ -10,7 +10,7 @@ Right-click `run.ps1` and choose **Run with PowerShell**, or open PowerShell in 
 .\run.ps1
 ```
 
-The first launch installs the required packages into a private `.packages` folder inside this project. Your browser then opens to <http://127.0.0.1:5000>.
+The first launch installs the required packages into a private `.packages` folder inside this project. The launcher opens the local site in your browser. If port 5000 is already in use, it picks the next free port and prints the exact address in PowerShell.
 
 ## Notes
 
