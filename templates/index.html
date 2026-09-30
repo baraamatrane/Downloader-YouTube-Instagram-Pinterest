@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f2">
+  <meta name="description" content="Save permitted videos, audio, and images from a link with a private local downloader.">
+  <title>Droply — Save Media from a Link</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to downloader</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Droply home" translate="no">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 5v16m0 0 6-6m-6 6-6-6M7 26h18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span>droply<span class="brand-dot">.</span></span>
+      </a>
+      <div class="header-status"><span class="status-light" aria-hidden="true"></span> Your local workspace</div>
+    </header>
+
+    <main id="main" class="main-content">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> THE SIMPLE MEDIA SAVER</div>
+        <h1 id="page-title">Keep the things <em>worth keeping.</em></h1>
+        <p class="intro-copy">A link is all you need. Save a video, extract its audio, or grab an image in a few clear steps.</p>
+
+        <div class="source-panel">
+          <span class="source-label">Works with public links from</span>
+          <div class="source-list" aria-label="Supported sources">
+            <span>YouTube</span><span>Instagram</span><span>Pinterest</span>
+          </div>
+        </div>
+
+        <div class="mini-guide" aria-label="How it works">
+          <div><span class="guide-number">01</span><span>Paste a link</span></div>
+          <div><span class="guide-number">02</span><span>Pick a format</span></div>
+          <div><span class="guide-number">03</span><span>Save your file</span></div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-labelledby="workspace-title">
+        <div class="workspace-header">
+          <div>
+            <div class="workspace-kicker">NEW DOWNLOAD</div>
+            <h2 id="workspace-title">What would you like to save?</h2>
+          </div>
+          <span class="privacy-chip"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5 16 5v4.6c0 3.8-2.4 6.4-6 8-3.6-1.6-6-4.2-6-8V5l6-2.5Z" stroke="currentColor" stroke-width="1.5"/><path d="m7.4 10 1.8 1.8 3.5-3.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Local & private</span>
+        </div>
+
+        <form id="download-form" novalidate>
+          <div class="field-group">
+            <div class="field-heading"><label for="url">Media link</label><span id="source-indicator" class="source-indicator" hidden></span></div>
+            <p class="field-hint" id="url-hint">Paste the URL of a public video, post, or image.</p>
+            <div class="url-field" id="url-field">
+              <svg class="link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l2.2-2.2a5 5 0 0 0-7.1-7.1l-1.4 1.4M14 11a5 5 0 0 0-7.5-.5l-2.2 2.2a5 5 0 0 0 7.1 7.1l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input id="url" name="url" type="url" inputmode="url" autocomplete="url" spellcheck="false" placeholder="https://www.youtube.com/watch?v=…" aria-describedby="url-hint url-error" required>
+              <button class="paste-button" type="button" id="paste-button" aria-label="Paste a link from clipboard"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="5" y="4.5" width="11" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V3.3A1.3 1.3 0 0 1 9.3 2h3.4A1.3 1.3 0 0 1 14 3.3v1.2M4 7H3a1 1 0 0 0-1 1v8a2 2 0 0 0 2 2h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Paste</span></button>
+            </div>
+            <p id="url-error" class="field-error" role="alert" hidden></p>
+          </div>
+
+          <fieldset class="format-picker">
+            <legend>Choose a format <span>Which file do you need?</span></legend>
+            <div class="format-options">
+              <label class="format-option">
+                <input type="radio" name="format" value="mp4" checked>
+                <span class="format-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="m10 9 5 3-5 3V9Z" fill="currentColor"/></svg></span>
+                <span class="format-copy"><strong>MP4 video</strong><small>Picture + sound</small></span>
+                <span class="radio-mark" aria-hidden="true"></span>
+              </label>
+              <label class="format-option">
+                <input type="radio" name="format" value="mp3">
+                <span class="format-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9 17V5l10-2v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="16" r="3" stroke="currentColor" stroke-width="1.8"/></svg></span>
+                <span class="format-copy"><strong>MP3 audio</strong><small>Sound only</small></span>
+                <span class="radio-mark" aria-hidden="true"></span>
+              </label>
+              <label class="format-option">
+                <input type="radio" name="format" value="image">
+                <span class="format-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="9" r="1.5" fill="currentColor"/><path d="m4 17 5-5 3.5 3.5 2.5-2.5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="format-copy"><strong>Image</strong><small>Original picture</small></span>
+                <span class="radio-mark" aria-hidden="true"></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <button class="download-button" type="submit" id="submit-button"><span id="submit-label">Download MP4</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <p class="form-note">No account needed. Files are prepared on this device.</p>
+        </form>
+
+        <div class="status-panel" id="status-panel" hidden>
+          <div class="status-top">
+            <span class="status-badge" id="status-label">Preparing</span>
+            <span id="progress-value" class="progress-value">…</span>
+          </div>
+          <h3 id="status-title" aria-live="polite">Checking your link…</h3>
+          <p id="status-detail">This may take a moment.</p>
+          <div class="progress-track" role="progressbar" aria-label="Download progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-bar"></span></div>
+          <a class="save-button" id="save-button" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Save File</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span>Made for the media you have permission to save.</span><span>Droply runs on your computer.</span></footer>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

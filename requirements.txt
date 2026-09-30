@@ -1,0 +1,6 @@
+Flask==3.1.2
+yt-dlp==2026.8.19
+yt-dlp-ejs==0.8.0
+imageio-ffmpeg==0.6.0
+requests==2.32.5
+beautifulsoup4==4.14.2
