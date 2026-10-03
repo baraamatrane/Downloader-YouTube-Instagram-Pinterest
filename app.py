@@ -35,6 +35,11 @@ ALLOWED_FORMATS = {"mp3", "mp4", "image"}
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"}
 
 
+def is_pinterest_url(url: str) -> bool:
+    host = (urlparse(url).hostname or "").lower().removeprefix("www.")
+    return host == "pin.it" or host == "pinterest.com" or host.endswith(".pinterest.com")
+
+
 def update_job(job_id: str, **changes) -> None:
     with JOBS_LOCK:
         if job_id in JOBS:
@@ -104,6 +109,7 @@ def download_with_ytdlp(job_id: str, url: str, media_format: str, folder: Path) 
     if shutil.which("node"):
         common["js_runtimes"] = {"node": {}}
 
+    pinterest = is_pinterest_url(url)
     if media_format == "mp3":
         common.update({
             "format": "bestaudio/best",
@@ -115,16 +121,32 @@ def download_with_ytdlp(job_id: str, url: str, media_format: str, folder: Path) 
         })
     elif media_format == "mp4":
         common.update({
-            "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
+            # Pinterest video pins often publish only a video HLS stream. The
+            # old selector required a separate M4A stream and rejected these pins.
+            "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo[ext=mp4]/bestvideo*/best[ext=mp4]/best" if pinterest else "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
             "merge_output_format": "mp4",
         })
     else:
         common.update({"format": "best"})
 
-    with YoutubeDL(common) as ydl:
-        update_job(job_id, status="extracting", detail="Checking available audio and video formats...")
-        info = ydl.extract_info(url, download=True)
-        title = info.get("title") or "download"
+    update_job(job_id, status="extracting", detail="Checking available audio and video formats...")
+    try:
+        with YoutubeDL(common) as ydl:
+            info = ydl.extract_info(url, download=True)
+            title = info.get("title") or "download"
+    except Exception as error:
+        # Some Pinterest pins change between a video pin and an image/HLS pin
+        # while the metadata request is in flight. Retry with the broadest
+        # single-stream selector before surfacing an error to the user.
+        if pinterest and media_format == "mp4" and "Requested format is not available" in str(error):
+            retry_options = dict(common)
+            retry_options["format"] = "bestvideo*/best"
+            update_job(job_id, status="extracting", detail="Retrying with the pin’s available video stream...")
+            with YoutubeDL(retry_options) as ydl:
+                info = ydl.extract_info(url, download=True)
+                title = info.get("title") or "download"
+        else:
+            raise
 
     return find_output(folder), safe_name(title)
 
