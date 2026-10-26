@@ -32,6 +32,12 @@ class DroplyTests(unittest.TestCase):
         response = self.client.post("/api/download", json={"url": "https://example.com", "format": "exe"})
         self.assertEqual(response.status_code, 400)
 
+    def test_accepts_linkedin_url(self):
+        self.assertEqual(
+            droply.validate_url("https://www.linkedin.com/posts/example_activity-1234567890123456789-abc"),
+            "https://www.linkedin.com/posts/example_activity-1234567890123456789-abc",
+        )
+
     def test_background_job_becomes_downloadable(self):
         def fake_image_download(_url, folder):
             output = folder / "Sample image.png"

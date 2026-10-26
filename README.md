@@ -1,6 +1,6 @@
 # Droply
 
-A private, local web interface for saving permitted media from supported URLs as MP4, MP3, or an original image.
+A private, local web interface for saving permitted media from YouTube, Instagram, Pinterest, LinkedIn, and other yt-dlp-supported URLs as MP4, MP3, or an original image.
 
 ## Start
 
@@ -17,6 +17,7 @@ The first launch installs the required packages into a private `.packages` folde
 - The app only listens on your computer (`127.0.0.1`).
 - Temporary downloads are removed when the server stops.
 - Some private, age-restricted, or login-only media cannot be accessed without authentication.
+- LinkedIn support is for public media links; login-only posts may not be downloadable.
 - Platform changes can occasionally require updating `yt-dlp`.
 - YouTube downloads use the bundled `yt-dlp-ejs` solver and require Node.js 22 or newer on your PATH.
 - Only download content you own or have permission to use, and follow the source platform's terms.

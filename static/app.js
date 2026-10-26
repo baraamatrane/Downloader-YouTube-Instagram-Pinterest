@@ -23,6 +23,7 @@ function sourceName(value) {
     if (hostname === "youtu.be" || hostname === "youtube.com" || hostname.endsWith(".youtube.com")) return "YouTube link";
     if (hostname === "instagram.com" || hostname.endsWith(".instagram.com")) return "Instagram link";
     if (hostname === "pin.it" || hostname === "pinterest.com" || hostname.endsWith(".pinterest.com")) return "Pinterest link";
+    if (hostname === "linkedin.com" || hostname.endsWith(".linkedin.com")) return "LinkedIn link";
     if (/\.(png|jpe?g|webp|gif|avif)(\?|$)/i.test(value)) return "Image link";
     return "Media link";
   } catch {
