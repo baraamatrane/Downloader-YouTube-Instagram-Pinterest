@@ -38,6 +38,12 @@ class DroplyTests(unittest.TestCase):
             "https://www.linkedin.com/posts/example_activity-1234567890123456789-abc",
         )
 
+    def test_accepts_facebook_url(self):
+        self.assertEqual(
+            droply.validate_url("https://www.facebook.com/watch/?v=123456789"),
+            "https://www.facebook.com/watch/?v=123456789",
+        )
+
     def test_background_job_becomes_downloadable(self):
         def fake_image_download(_url, folder):
             output = folder / "Sample image.png"
